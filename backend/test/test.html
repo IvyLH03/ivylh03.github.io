@@ -1,0 +1,59 @@
+<html>
+  <body>
+    <p>hello</p>
+    <button onclick="getThings()">get</button>
+    <button onclick="postThings()">put</button>
+    <script>
+      let base_url = "http://localhost:8000/"
+      function getStatus() {
+        fetch(base_url + "get_status", {
+          method: "GET"
+        })
+        .then(res => {
+          console.log(res); 
+          return res.json()})
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+      }
+    
+      function updateStatus(status) {
+        fetch(base_url + "update_status", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            status: status
+          })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        
+      }
+
+      function updateThing(id) {
+        fetch(base_url +`timeline?id=${id}`, {
+          method: "PUT",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            event:"New name",
+            start:"1",
+            end:"20",
+            description:"New description!"
+          })
+        })
+        .then(res => console.log(res))
+      }
+
+      function deleteThing(id) {
+        fetch(base_url +`timeline?id=${id}`, {
+          method: "DELETE"
+        })
+        .then(res => console.log(res))
+      }
+    </script>
+  </body>
+
+</html>

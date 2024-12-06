@@ -79,7 +79,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p> */}
       {/* <Typography sx={{p:1}}>Welcome to my Website</Typography> */}
-      <StatusCard firstName={"Ivy"} legalFirst={"Hanzhang"} lastName={"Zhu"} statusName={status} statusStartTime={statusStartTime}/>
+      <StatusCard firstName={"Ivy"} legalFirst={"Hanzhang"} lastName={"Zhu"} nickName={"IvyLH03"} statusName={status} statusStartTime={statusStartTime}/>
       {/* <Typography>{joke}</Typography> */}
       <Box sx={{display:"flex", flexDirection:"row", m:3, justifyContent:"center", alignItems:"center"}}>
         

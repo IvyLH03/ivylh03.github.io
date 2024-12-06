@@ -8,7 +8,7 @@ const app = express();
 const port = 8000;
 
 const GET_CURRENT_STATUS_SQL = "SELECT * FROM CurrentStatus"
-const UPDATE_CURRENT_STATUS_SQL = "UPDATE CurrentStatus SET status = ? WHERE id = ?;"
+const UPDATE_CURRENT_STATUS_SQL = "UPDATE CurrentStatus SET status = ?, starttime = ? WHERE id = ?;"
 const INSERT_CURRENT_STATUS_SQL = "INSERT INTO CurrentStatus(status, starttime) VALUES (?, ?) RETURNING id;"
 
 const INITIAL_STATUS = "Wandering"
@@ -41,7 +41,7 @@ app.post('/update_status', async (req, res) => {
         })
     } else {
         const currentStatus = await db.get(GET_CURRENT_STATUS_SQL)
-        await db.get(UPDATE_CURRENT_STATUS_SQL, status, currentStatus.id)
+        await db.get(UPDATE_CURRENT_STATUS_SQL, status, Date.now(), currentStatus.id)
         res.status(200).send({
             msg:"Update successful!"
         })

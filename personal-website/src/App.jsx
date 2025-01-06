@@ -9,6 +9,12 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import { useEffect } from 'react';
+import {createRoot} from 'react-dom/client'
+import Markdown from 'react-markdown'
+
+const markdown = '# Hi, *Pluto*!'
+
+// createRoot(document.body).render(<Markdown>{markdown}</Markdown>)
 
 function ButtonUsage() {
   return <Button variant="contained">Hello world</Button>;
@@ -34,7 +40,7 @@ function App() {
   const [joke, setJoke] = useState("")
 
   useEffect(() => {
-    fetch("http://18.224.139.120:8000/get_status")
+    fetch("http://api.ivylh03.net:8000/get_status")
     .then(res => res.json())
     .then(data => {
       console.log(data)

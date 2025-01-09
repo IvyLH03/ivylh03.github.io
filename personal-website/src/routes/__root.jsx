@@ -16,6 +16,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid2';
+import Markdown from 'react-markdown';
+import { FullWidthGrid } from './grid';
 
 function IconButtonWithTooltip({children, title, onClick}) {
   return <Tooltip title={title}>
@@ -87,19 +89,19 @@ function Sidebar() {
         <StatusCard firstName={"Ivy"} legalFirst={"Hanzhang"} lastName={"Zhu"} nickName={"IvyLH03"} statusName={status} statusStartTime={statusStartTime}/>
         <Divider />
         <List>
-          {['Home', 'Blogs'].map((text, index) => (
-            <SidebarItem text={text}/>
-          ))}
+          <SidebarItem text={"Home"}/>
+          <SidebarItem text={"Blog"}/>
+          <SidebarItem text={"Contact"}/>
         </List>
-      <Container sx={{display:"flex", flexDirection:"row", m:3, justifyContent:"center", alignItems:"center"}}>  
-        <IconButtonWithTooltip title={"GitHub"} onClick={()=>{window.open("https://github.com/IvyLH03")}}>
-          <GitHubIcon sx={{fontSize:40}} />
-        </IconButtonWithTooltip>
-        <IconSplit/>
-        <IconButtonWithTooltip title={"email"} onClick={()=>{window.open("mailto:ivy.hanzhang.zhu@gmail.com")}}>
-          <EmailIcon sx={{fontSize:40}}/>
-        </IconButtonWithTooltip>
-      </Container>
+        <Container sx={{display:"flex", flexDirection:"row", marginTop:16, justifyContent:"center", alignItems:"center"}}>  
+          <IconButtonWithTooltip title={"GitHub"} onClick={()=>{window.open("https://github.com/IvyLH03")}}>
+            <GitHubIcon sx={{fontSize:40}} />
+          </IconButtonWithTooltip>
+          <IconSplit/>
+          <IconButtonWithTooltip title={"email"} onClick={()=>{window.open("mailto:ivy.hanzhang.zhu@gmail.com")}}>
+            <EmailIcon sx={{fontSize:40}}/>
+          </IconButtonWithTooltip>
+        </Container>
       </Drawer> 
     </Container>
 
@@ -108,15 +110,15 @@ function Sidebar() {
 
 export const Route = createRootRoute({
   component: () => (
-    <Grid container>
-      <Grid size={"auto"}>
-        <Sidebar/>
+    <Container sx={{width:"100vw", height:"100vh", m:0, p:0}} maxWidth={false}>
+      <Grid container sx={{width:"100%", height:"100%", m:0, p:0}}>
+        <Grid size={"auto"}>
+          <Sidebar/>
+        </Grid>
+        <Grid size={"grow"}>
+          <Outlet />
+        </Grid>
       </Grid>
-      <Grid size={"grow"}>
-        <Container >
-          {/* <Outlet /> */}
-        </Container>
-      </Grid>
-    </Grid>
+    </Container>
   ),
 })

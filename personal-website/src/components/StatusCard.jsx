@@ -25,10 +25,10 @@ export default function StatusCard({firstName, legalFirst, lastName, statusName,
   },[])
 
   return <>
-      <Paper elevation={2} sx={{p:2, width:400}}>
+      <Paper elevation={2} sx={{p:2, m:2, width:"80%"}}>
         <Box sx={{display: 'flex', flexDirection:'row', alignItems:"center"}}>
           <Box sx={{p:2, width:"40%"}}>
-          <Avatar sx={{width:"100%", height:"100%"}} alt="Ivy Zhu" src={avatar} />
+            <Avatar sx={{width:"100%", height:"100%"}} alt="Ivy Zhu" src={avatar} />
           </Box>
           <Box sx={{display: 'flex', flexDirection:'column', alignItems:'baseline', p:1}}>
             <Typography variant="h6">{firstName} {lastName}</Typography>

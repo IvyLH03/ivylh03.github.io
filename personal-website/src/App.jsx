@@ -9,20 +9,14 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import { useEffect } from 'react';
-import {createRoot} from 'react-dom/client'
 import Markdown from 'react-markdown'
+
 
 const markdown = '# Hi, *Pluto*!'
 
-// createRoot(document.body).render(<Markdown>{markdown}</Markdown>)
-
-function ButtonUsage() {
-  return <Button variant="contained">Hello world</Button>;
-}
-
-function IconButtonWithTooltip({children, title}) {
+function IconButtonWithTooltip({children, title, onClick}) {
   return <Tooltip title={title}>
-    <IconButton>
+    <IconButton onClick={onClick}>
       {children}
     </IconButton>
   </Tooltip>
@@ -30,7 +24,6 @@ function IconButtonWithTooltip({children, title}) {
 
 function IconSplit() {
   return <Typography sx={{m:1}}>○</Typography>
-
 }
 
 function App() {
@@ -89,12 +82,12 @@ function App() {
       {/* <Typography>{joke}</Typography> */}
       <Box sx={{display:"flex", flexDirection:"row", m:3, justifyContent:"center", alignItems:"center"}}>
         
-        <IconButtonWithTooltip title={"GitHub"}>
-          <GitHubIcon sx={{fontSize:40}} onClick={()=>{window.open("https://github.com/IvyLH03")}}/>
+        <IconButtonWithTooltip title={"GitHub"} onClick={()=>{window.open("https://github.com/IvyLH03")}}>
+          <GitHubIcon sx={{fontSize:40}} />
         </IconButtonWithTooltip>
         <IconSplit/>
-        <IconButtonWithTooltip title={"email"}>
-          <EmailIcon sx={{fontSize:40}} onClick={()=>{window.open("mailto:ivy.hanzhang.zhu@gmail.com")}}/>
+        <IconButtonWithTooltip title={"email"} onClick={()=>{window.open("mailto:ivy.hanzhang.zhu@gmail.com")}}>
+          <EmailIcon sx={{fontSize:40}}/>
         </IconButtonWithTooltip>
 
       </Box>
@@ -102,5 +95,6 @@ function App() {
 
   )
 }
+
 
 export default App

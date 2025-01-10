@@ -8,12 +8,22 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { NotFoundRoute } from '@tanstack/react-router'
+import { Route as rootRoute } from './routes/__root.jsx'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-// Create a new router instance
-const router = createRouter({ routeTree })
+
+const notFoundRoute = new NotFoundRoute({
+  getParentRoute: () => rootRoute,
+  component: () => '404 Not Found',
+})
+
+const router = createRouter({
+  routeTree,
+  notFoundRoute,
+})
 
 
 // Render the app

@@ -1,5 +1,6 @@
 import { Container, Paper, Typography, Box, Avatar} from "@mui/material";
 import avatar from '../assets/avatar.png'
+import image from '../assets/image.png'
 import { useEffect, useState } from "react";
 
 
@@ -28,9 +29,9 @@ export default function StatusCard({firstName, legalFirst, lastName, statusName,
       <Paper elevation={2} sx={{p:2, m:2, width:"80%"}}>
         <Box sx={{display: 'flex', flexDirection:'row', alignItems:"center"}}>
           <Box sx={{p:2, width:"40%"}}>
-            <Avatar sx={{width:"100%", height:"100%"}} alt="Ivy Zhu" src={avatar} />
+            <Avatar sx={{width:"100%", height:"100%"}} alt="Ivy Zhu" src={image} />
           </Box>
-          <Box sx={{display: 'flex', flexDirection:'column', alignItems:'baseline', p:1}}>
+          <Box sx={{display: 'flex', flexDirection:'column', alignItems:'baseline', p:1, width: "60%"}}>
             <Typography variant="h6">{firstName} {lastName}</Typography>
             <Typography sx={{textAlign:"left", m:1, fontWeight:200}}>{statusName}...</Typography>
             <StatusLastTimeText text={statusLastTimeFormatted} />

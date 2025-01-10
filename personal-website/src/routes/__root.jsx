@@ -17,7 +17,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid2';
 import Markdown from 'react-markdown';
-import { FullWidthGrid } from './grid';
+import { useMemo } from 'react';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import * as locales from '@mui/material/locale';
+
 
 function IconButtonWithTooltip({children, title, onClick}) {
   return <Tooltip title={title}>
@@ -109,16 +112,28 @@ function Sidebar() {
 }
 
 export const Route = createRootRoute({
-  component: () => (
-    <Container sx={{width:"100vw", height:"100vh", m:0, p:0}} maxWidth={false}>
-      <Grid container sx={{width:"100%", height:"100%", m:0, p:0}}>
-        <Grid size={"auto"}>
-          <Sidebar/>
+  component: () => {
+    const [locale, setLocale] = useState('enUS');
+
+    const theme = useTheme();
+
+    const themeWithLocale = useMemo(
+      () => createTheme(theme, locales[locale]),
+      [locale, theme],
+    );
+
+    return (
+    <ThemeProvider theme={themeWithLocale}>
+      <Container sx={{width:"100vw", height:"100vh", m:0, p:0}} maxWidth={false}>
+        <Grid container sx={{width:"100%", height:"100%", m:0, p:0}}>
+          <Grid size={"auto"} sx={{p:0, m:0}}>
+            <Sidebar/>
+          </Grid>
+          <Grid container size={"grow"} maxWidth={"md"}>
+            <Outlet />
+          </Grid>
         </Grid>
-        <Grid size={"grow"}>
-          <Outlet />
-        </Grid>
-      </Grid>
-    </Container>
-  ),
+      </Container>
+    </ThemeProvider>
+  )},
 })

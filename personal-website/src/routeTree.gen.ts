@@ -11,14 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as GridImport } from './routes/grid'
+import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const GridRoute = GridImport.update({
-  id: '/grid',
-  path: '/grid',
+const notFoundRouteRoute = notFoundRouteImport.update({
+  id: '/__notFoundRoute',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +38,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/grid': {
-      id: '/grid'
-      path: '/grid'
-      fullPath: '/grid'
-      preLoaderRoute: typeof GridImport
+    '/__notFoundRoute': {
+      id: '/__notFoundRoute'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof notFoundRouteImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +52,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/grid': typeof GridRoute
+  '': typeof notFoundRouteRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/grid': typeof GridRoute
+  '': typeof notFoundRouteRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/grid': typeof GridRoute
+  '/__notFoundRoute': typeof notFoundRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/grid'
+  fullPaths: '/' | ''
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/grid'
-  id: '__root__' | '/' | '/grid'
+  to: '/' | ''
+  id: '__root__' | '/' | '/__notFoundRoute'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  GridRoute: typeof GridRoute
+  notFoundRouteRoute: typeof notFoundRouteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  GridRoute: GridRoute,
+  notFoundRouteRoute: notFoundRouteRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +96,14 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/grid"
+        "/__notFoundRoute"
       ]
     },
     "/": {
       "filePath": "index.jsx"
     },
-    "/grid": {
-      "filePath": "grid.jsx"
+    "/__notFoundRoute": {
+      "filePath": "__notFoundRoute.jsx"
     }
   }
 }

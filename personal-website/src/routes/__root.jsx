@@ -71,30 +71,15 @@ const SidebarLink= (props) => {
 // }
 
 function Sidebar() {
-  const [count, setCount] = useState(0)
   const [status, setStatus] = useState("Loading status...")
   const [statusStartTime, setStatusStartTime] = useState(Date.now())
-  const [joke, setJoke] = useState("")
 
   useEffect(() => {
     fetch("http://api.ivylh03.net:8000/get_status")
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       setStatus(data.currentStatus.status)
       setStatusStartTime(data.currentStatus.starttime)
-      console.log(statusStartTime)
-    })
-
-    fetch("https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit")
-    .then(res => res.json())
-    .then(data=>{
-      if(data.type == "single") {
-        setJoke(data.joke)
-      }
-      else {
-        setJoke(`${data.setup}\n ${data.delivery}`)
-      }
     })
   },[])
 

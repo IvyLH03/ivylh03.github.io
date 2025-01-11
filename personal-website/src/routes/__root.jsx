@@ -1,9 +1,9 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Link, Outlet, createLink } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-
+import { forwardRef } from 'react';
 import { useState, useEffect } from 'react'
 import StatusCard from '../components/StatusCard';
-import { Box, IconButton, Tooltip, Typography, Drawer, Container} from '@mui/material';
+import { Box, IconButton, Tooltip, Typography, Drawer, Container, Button} from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import List from '@mui/material/List';
@@ -20,8 +20,10 @@ import Markdown from 'react-markdown';
 import { useMemo } from 'react';
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import * as locales from '@mui/material/locale';
+import { Link as MuiLink} from '@mui/material';
 
 
+// Icon list (github, email)
 function IconButtonWithTooltip({children, title, onClick}) {
   return <Tooltip title={title}>
     <IconButton onClick={onClick}>
@@ -34,14 +36,39 @@ function IconSplit() {
   return <Typography sx={{m:1}}>○</Typography>
 }
 
-function SidebarItem({text}) {
-  return <ListItem key={text} disablePadding>
-    <ListItemButton>
-      <ListItemText sx={{paddingLeft:3}} primary={text} />
-    </ListItemButton>
-  </ListItem>
 
+// -----
+
+// -----
+// sidebar links
+const LinkComponent = forwardRef(
+  (props, ref) => {
+    return (
+      <ListItem key={props.text} disablePadding>
+        <MuiLink ref={ref} {...props} color='textPrimary' underline='none' sx={{width:"100%"}}>
+          <ListItemButton>
+            <ListItemText sx={{paddingLeft:3}} primary={props.text} />
+          </ListItemButton>
+        </MuiLink>
+      </ListItem>
+    )
+  },
+)
+
+const CreatedLinkComponent = createLink(LinkComponent)
+
+const SidebarLink= (props) => {
+  return <CreatedLinkComponent preload={'intent'} {...props} />
 }
+
+// function SidebarItem({text}) {
+//   return <ListItem key={text} disablePadding>
+//     <ListItemButton>
+//         <ListItemText sx={{paddingLeft:3}} primary={text} />
+//     </ListItemButton>
+//   </ListItem>
+
+// }
 
 function Sidebar() {
   const [count, setCount] = useState(0)
@@ -92,9 +119,9 @@ function Sidebar() {
         <StatusCard firstName={"Ivy"} legalFirst={"Hanzhang"} lastName={"Zhu"} nickName={"IvyLH03"} statusName={status} statusStartTime={statusStartTime}/>
         <Divider />
         <List>
-          <SidebarItem text={"Home"}/>
-          <SidebarItem text={"Blog"}/>
-          <SidebarItem text={"Contact"}/>
+          <SidebarLink text={"Home"} to={"/"}/>
+          <SidebarLink text={"Blog"} to={"/blog"}/>
+          <SidebarLink text={"Contact"} to={"/contact"}/>
         </List>
         <Container sx={{display:"flex", flexDirection:"row", marginTop:16, justifyContent:"center", alignItems:"center"}}>  
           <IconButtonWithTooltip title={"GitHub"} onClick={()=>{window.open("https://github.com/IvyLH03")}}>
@@ -113,17 +140,16 @@ function Sidebar() {
 
 export const Route = createRootRoute({
   component: () => {
-    const [locale, setLocale] = useState('enUS');
 
-    const theme = useTheme();
-
-    const themeWithLocale = useMemo(
-      () => createTheme(theme, locales[locale]),
-      [locale, theme],
-    );
+    const theme = createTheme({
+      colorSchemes: {
+        dark: true,
+      },
+    });
+    
 
     return (
-    <ThemeProvider theme={themeWithLocale}>
+    <ThemeProvider theme={theme}>
       <Container sx={{width:"100vw", height:"100vh", m:0, p:0}} maxWidth={false}>
         <Grid container sx={{width:"100%", height:"100%", m:0, p:0}}>
           <Grid size={"auto"} sx={{p:0, m:0}}>

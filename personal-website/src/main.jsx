@@ -13,11 +13,17 @@ import { Route as rootRoute } from './routes/__root.jsx'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
+import { Container } from '@mui/material';
+import Markdown from 'react-markdown';
 
 
 const notFoundRoute = new NotFoundRoute({
   getParentRoute: () => rootRoute,
-  component: () => '404 Not Found',
+  component: () => (<Container sx={{textAlign:"center", alignSelf:"center"}}>
+    <Markdown>
+      {"# Oops!\n\nNothing is here. 404 not found"}
+    </Markdown>
+  </Container>),
 })
 
 const router = createRouter({

@@ -11,10 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ContactImport } from './routes/contact'
+import { Route as BlogImport } from './routes/blog'
 import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const ContactRoute = ContactImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogRoute = BlogImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const notFoundRouteRoute = notFoundRouteImport.update({
   id: '/__notFoundRoute',
@@ -45,6 +59,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof notFoundRouteImport
       parentRoute: typeof rootRoute
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogImport
+      parentRoute: typeof rootRoute
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -53,36 +81,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof notFoundRouteRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof notFoundRouteRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/__notFoundRoute': typeof notFoundRouteRoute
+  '/blog': typeof BlogRoute
+  '/contact': typeof ContactRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | ''
+  fullPaths: '/' | '' | '/blog' | '/contact'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | ''
-  id: '__root__' | '/' | '/__notFoundRoute'
+  to: '/' | '' | '/blog' | '/contact'
+  id: '__root__' | '/' | '/__notFoundRoute' | '/blog' | '/contact'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   notFoundRouteRoute: typeof notFoundRouteRoute
+  BlogRoute: typeof BlogRoute
+  ContactRoute: typeof ContactRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   notFoundRouteRoute: notFoundRouteRoute,
+  BlogRoute: BlogRoute,
+  ContactRoute: ContactRoute,
 }
 
 export const routeTree = rootRoute
@@ -96,7 +134,9 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/__notFoundRoute"
+        "/__notFoundRoute",
+        "/blog",
+        "/contact"
       ]
     },
     "/": {
@@ -104,6 +144,12 @@ export const routeTree = rootRoute
     },
     "/__notFoundRoute": {
       "filePath": "__notFoundRoute.jsx"
+    },
+    "/blog": {
+      "filePath": "blog.jsx"
+    },
+    "/contact": {
+      "filePath": "contact.jsx"
     }
   }
 }

@@ -21,6 +21,7 @@ import { useMemo } from 'react';
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import * as locales from '@mui/material/locale';
 import { Link as MuiLink} from '@mui/material';
+import { useMediaQuery } from "react-responsive";
 
 
 // Icon list (github, email)
@@ -132,14 +133,19 @@ export const Route = createRootRoute({
       },
     });
     
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+
 
     return (
     <ThemeProvider theme={theme}>
       <Container sx={{width:"100vw", height:"100vh", m:0, p:0}} maxWidth={false}>
         <Grid container sx={{width:"100%", height:"100%", m:0, p:0}}>
-          <Grid size={"auto"} sx={{p:0, m:0}}>
-            <Sidebar/>
-          </Grid>
+          {isMobile?
+            <></>:
+            <Grid size={"auto"} sx={{p:0, m:0}}>
+              <Sidebar/>
+            </Grid>}
+          
           <Grid container size={"grow"} maxWidth={"md"}>
             <Outlet />
           </Grid>

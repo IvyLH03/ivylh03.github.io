@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as ContactImport } from './routes/contact'
 import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProjectsIndexImport } from './routes/projects/index'
 import { Route as BlogsIndexImport } from './routes/blogs/index'
 import { Route as BlogsBlogIdImport } from './routes/blogs/$blogId'
 
@@ -33,6 +34,12 @@ const notFoundRouteRoute = notFoundRouteImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProjectsIndexRoute = ProjectsIndexImport.update({
+  id: '/projects/',
+  path: '/projects/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -98,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs': typeof BlogsIndexRoute
+  '/projects': typeof ProjectsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -106,6 +121,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs': typeof BlogsIndexRoute
+  '/projects': typeof ProjectsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -115,13 +131,14 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs'
+  fullPaths: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs' | '/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs'
+  to: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs' | '/projects'
   id:
     | '__root__'
     | '/'
@@ -129,6 +146,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/blogs/$blogId'
     | '/blogs/'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 
@@ -138,6 +156,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   BlogsBlogIdRoute: typeof BlogsBlogIdRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -146,6 +165,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   BlogsBlogIdRoute: BlogsBlogIdRoute,
   BlogsIndexRoute: BlogsIndexRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -162,7 +182,8 @@ export const routeTree = rootRoute
         "/__notFoundRoute",
         "/contact",
         "/blogs/$blogId",
-        "/blogs/"
+        "/blogs/",
+        "/projects/"
       ]
     },
     "/": {
@@ -179,6 +200,9 @@ export const routeTree = rootRoute
     },
     "/blogs/": {
       "filePath": "blogs/index.jsx"
+    },
+    "/projects/": {
+      "filePath": "projects/index.jsx"
     }
   }
 }

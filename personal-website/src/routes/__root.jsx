@@ -107,7 +107,9 @@ function Sidebar() {
         <List>
           <SidebarLink text={"Home"} to={"/"}/>
           <SidebarLink text={"Blogs"} to={"/blogs"}/>
+          <SidebarLink text={"Projects"} to={"/projects"}/>
           <SidebarLink text={"Contact"} to={"/contact"}/>
+
         </List>
         <Container sx={{display:"flex", flexDirection:"row", marginTop:16, justifyContent:"center", alignItems:"center"}}>  
           <IconButtonWithTooltip title={"GitHub"} onClick={()=>{window.open("https://github.com/IvyLH03")}}>

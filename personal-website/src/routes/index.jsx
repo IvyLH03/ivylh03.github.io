@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
 
 const text = "# Hello!👋\n\nMy name is Ivy Zhu (Hanzhang Zhu). I am currently a junior in UW-Madison, majoring in Computer Science. \n\nI enjoy working on all kinds of projects and helping people build software solutions to solve real-world problems. If you're facing a challenge and need a hand, I'd love to help. And if you're working on a cool project, feel free to invite me - I'm always excited to collaborate and learn something new!"
 
-const helping = "### 👥 I can help you with...\n\n- Building websites - like this one \n\n- Building online automation tools\n\t - Post backup & text process\n\t[Example](https://github.com/IvyLH03/Bacupia) \n\t - Automods & chatbots [Example](https://github.com/IvyLH03/Nephthys)"
+const helping = "### 👥 I can help you with...\n\n- Building websites - like this one \n\n- Building online automation tools\n\t - Post backup & text process\n\t[Example](https://ivylh03.net/bacupia/) \n\t - Automods & chatbots [Example](https://github.com/IvyLH03/Nephthys)"
 const projects = "### 💻 I am working on...\n\n- Voice interaction alarm app \n\t- Learning Kotlin\n\t- [See demo from MadHacks](https://devpost.com/software/remind-me-that)\n\n- Minesweeper AI\n\t- Learning reinforcement learning"
 const seeking = "### 🏃 I am looking for...\n\n- Any interesting opportunities! \n\t- Internship, research, projects, random ideas...\n- Meeting new friends in Madison"
 

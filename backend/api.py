@@ -10,11 +10,17 @@ import asyncio
 app = Flask(__name__)
 CORS(app)
 
-# test hello
-@app.route('/', methods=['GET'])
-def hello():
+
+
+# status for card
+@app.route('/status', methods=['GET'])
+def get_status():
     try:
-        return jsonify("Hello")
+        return jsonify({
+            "currentStatus":{
+            "status":"Hello",
+            "starttime":time.time() * 1000
+        }})
     except Exception as e:
         return f"Error: {e}"
     

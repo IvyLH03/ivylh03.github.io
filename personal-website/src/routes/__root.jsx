@@ -106,7 +106,7 @@ function Sidebar() {
         <Divider />
         <List>
           <SidebarLink text={"Home"} to={"/"}/>
-          <SidebarLink text={"Blog"} to={"/blog"}/>
+          <SidebarLink text={"Blogs"} to={"/blogs"}/>
           <SidebarLink text={"Contact"} to={"/contact"}/>
         </List>
         <Container sx={{display:"flex", flexDirection:"row", marginTop:16, justifyContent:"center", alignItems:"center"}}>  
@@ -122,6 +122,16 @@ function Sidebar() {
     </Container>
 
   )
+}
+
+function FooterComponent(){
+  return <footer style={{width:"100%"}}>
+    <Container sx={{width:"100%", marginTop:3}}>
+      <Typography alignSelf={'center'} textAlign={'center'}>
+        &copy; 2025 IvyLH03
+      </Typography>
+    </Container>
+  </footer>
 }
 
 export const Route = createRootRoute({
@@ -146,8 +156,13 @@ export const Route = createRootRoute({
               <Sidebar/>
             </Grid>}
           
-          <Grid container size={"grow"} maxWidth={"md"}>
-            <Outlet />
+          <Grid container size={"grow"} maxWidth={"md"} direction="column">
+            <Grid size={"grow"} container>
+              <Outlet />
+            </Grid>
+            <Grid size={'auto'}>
+              <FooterComponent/>
+            </Grid>
           </Grid>
         </Grid>
       </Container>

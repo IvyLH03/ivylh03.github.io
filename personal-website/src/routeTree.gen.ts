@@ -12,21 +12,16 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ContactImport } from './routes/contact'
-import { Route as BlogImport } from './routes/blog'
 import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
+import { Route as BlogsIndexImport } from './routes/blogs/index'
+import { Route as BlogsBlogIdImport } from './routes/blogs/$blogId'
 
 // Create/Update Routes
 
 const ContactRoute = ContactImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const BlogRoute = BlogImport.update({
-  id: '/blog',
-  path: '/blog',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -38,6 +33,18 @@ const notFoundRouteRoute = notFoundRouteImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsIndexRoute = BlogsIndexImport.update({
+  id: '/blogs/',
+  path: '/blogs/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsBlogIdRoute = BlogsBlogIdImport.update({
+  id: '/blogs/$blogId',
+  path: '/blogs/$blogId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -59,18 +66,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof notFoundRouteImport
       parentRoute: typeof rootRoute
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogImport
-      parentRoute: typeof rootRoute
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactImport
+      parentRoute: typeof rootRoute
+    }
+    '/blogs/$blogId': {
+      id: '/blogs/$blogId'
+      path: '/blogs/$blogId'
+      fullPath: '/blogs/$blogId'
+      preLoaderRoute: typeof BlogsBlogIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/blogs'
+      fullPath: '/blogs'
+      preLoaderRoute: typeof BlogsIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -81,46 +95,57 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof notFoundRouteRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs': typeof BlogsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof notFoundRouteRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs': typeof BlogsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/__notFoundRoute': typeof notFoundRouteRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs/': typeof BlogsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/blog' | '/contact'
+  fullPaths: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/blog' | '/contact'
-  id: '__root__' | '/' | '/__notFoundRoute' | '/blog' | '/contact'
+  to: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs'
+  id:
+    | '__root__'
+    | '/'
+    | '/__notFoundRoute'
+    | '/contact'
+    | '/blogs/$blogId'
+    | '/blogs/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   notFoundRouteRoute: typeof notFoundRouteRoute
-  BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
+  BlogsBlogIdRoute: typeof BlogsBlogIdRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   notFoundRouteRoute: notFoundRouteRoute,
-  BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
+  BlogsBlogIdRoute: BlogsBlogIdRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,8 +160,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/__notFoundRoute",
-        "/blog",
-        "/contact"
+        "/contact",
+        "/blogs/$blogId",
+        "/blogs/"
       ]
     },
     "/": {
@@ -145,11 +171,14 @@ export const routeTree = rootRoute
     "/__notFoundRoute": {
       "filePath": "__notFoundRoute.jsx"
     },
-    "/blog": {
-      "filePath": "blog.jsx"
-    },
     "/contact": {
       "filePath": "contact.jsx"
+    },
+    "/blogs/$blogId": {
+      "filePath": "blogs/$blogId.jsx"
+    },
+    "/blogs/": {
+      "filePath": "blogs/index.jsx"
     }
   }
 }

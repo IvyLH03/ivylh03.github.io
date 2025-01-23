@@ -2,7 +2,7 @@ import { Breadcrumbs, Container, Divider, List, ListItem, ListItemButton, ListIt
 import { createFileRoute, createLink } from '@tanstack/react-router'
 import { Link as MuiLink} from '@mui/material';
 import Markdown from 'react-markdown'
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/blogs/')({
   component: RouteComponent,
@@ -42,7 +42,14 @@ function BlogList({blogs}) {
 }
 
 function RouteComponent() {
-  const [blogList, setBlogList] = useState([{title: "hello", time: "1970-01-01", id:"1"}])
+  const [blogList, setBlogList] = useState([])
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/blogs")
+    .then(res=>res.json())
+    .then(data=>setBlogList(data))
+  }, [])
+  
   return (
     <Container sx={{marginTop:3, marginBottom:3}}>
       <Breadcrumbs>

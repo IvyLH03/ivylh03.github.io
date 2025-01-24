@@ -49,7 +49,7 @@ function RouteComponent() {
     .then(res=>res.json())
     .then(data=>setBlogList(data))
   }, [])
-  
+
   return (
     <Container sx={{marginTop:3, marginBottom:3}}>
       <Breadcrumbs>
@@ -57,6 +57,13 @@ function RouteComponent() {
         <Divider/>
       </Breadcrumbs>
       <h1>Blogs</h1>
+      <Typography>
+        I don't know if these are serious enough to be called "blogs". Most of them are just work logs or notes that I will use for future reference. I built this blog system by myself. 
+      </Typography>
+      <br/>
+      <Typography>
+        Anyways, here's a list of my blogs. ✍️🔥🔥🔥
+      </Typography>
       <BlogList blogs={blogList}/>
     </Container>
   )

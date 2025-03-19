@@ -1,17 +1,28 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
-import BlogEditor from '../../components/BlogEditor'
+import BlogEditor from '../../../components/BlogEditor'
 import { Container, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 
-export const Route = createFileRoute('/blogs/create')({
+export const Route = createFileRoute('/blogs/edit/$blogId')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  // create the blog
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
+  const { blogId } = Route.useParams()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    fetch(`https://blog.ivylh03.net/blog/${blogId}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      setTitle(data.title)
+      setContent(data.content)
+    })
+  }
+  ,[])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,8 +30,8 @@ function RouteComponent() {
     // alert user for the upload password
     const password = prompt("Please enter the upload password")
 
-    fetch("https://blog.ivylh03.net/blog/create", {
-      method: "POST",
+    fetch(`https://blog.ivylh03.net/blog/${blogId}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
@@ -37,12 +48,8 @@ function RouteComponent() {
     })
   }
 
-
-
-  return <>
-    <Container>
-        <Typography variant="h4" sx={{marginTop:3}}>Create a new blog</Typography>
-        <BlogEditor onContentChange={setContent} onTitleChange={setTitle} onSubmit={handleSubmit}/>
-    </Container>
-  </>
+  return <Container>
+    <Typography variant="h4" sx={{marginTop:3}}>Edit Blog</Typography>
+    <BlogEditor onContentChange={setContent} onTitleChange={setTitle} onSubmit={handleSubmit} content={content} title={title}/>
+  </Container>
 }

@@ -15,11 +15,12 @@ function RouteComponent() {
 
 
   useEffect(()=>{
-    fetch(`http://127.0.0.1:5000/blogs/${blogId}`)
+    fetch(`https://blog.ivylh03.net/blog/${blogId}`)
     .then(res => res.json())
     .then(data => {
+      console.log(data)
       setTitle(data.title)
-      setPostTime(data.time)
+      setPostTime(data.created_at)
       setContent(data.content)
     })
   },[])

@@ -15,7 +15,7 @@ const BlogListForwardRef = forwardRef(
         <ListItem>
           <ListItemText
             primary={props.data.title}
-            secondary={props.data.time}
+            secondary={props.data.created_at}
           />
         </ListItem>
       </ListItemButton>
@@ -45,7 +45,7 @@ function RouteComponent() {
   const [blogList, setBlogList] = useState([])
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/blogs")
+    fetch("https://blog.ivylh03.net/blogs")
     .then(res=>res.json())
     .then(data=>setBlogList(data))
   }, [])

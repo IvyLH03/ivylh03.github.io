@@ -16,6 +16,7 @@ import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProjectsIndexImport } from './routes/projects/index'
 import { Route as BlogsIndexImport } from './routes/blogs/index'
+import { Route as BlogsCreateImport } from './routes/blogs/create'
 import { Route as BlogsBlogIdImport } from './routes/blogs/$blogId'
 
 // Create/Update Routes
@@ -46,6 +47,12 @@ const ProjectsIndexRoute = ProjectsIndexImport.update({
 const BlogsIndexRoute = BlogsIndexImport.update({
   id: '/blogs/',
   path: '/blogs/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsCreateRoute = BlogsCreateImport.update({
+  id: '/blogs/create',
+  path: '/blogs/create',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsBlogIdImport
       parentRoute: typeof rootRoute
     }
+    '/blogs/create': {
+      id: '/blogs/create'
+      path: '/blogs/create'
+      fullPath: '/blogs/create'
+      preLoaderRoute: typeof BlogsCreateImport
+      parentRoute: typeof rootRoute
+    }
     '/blogs/': {
       id: '/blogs/'
       path: '/blogs'
@@ -111,6 +125,7 @@ export interface FileRoutesByFullPath {
   '': typeof notFoundRouteRoute
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs/create': typeof BlogsCreateRoute
   '/blogs': typeof BlogsIndexRoute
   '/projects': typeof ProjectsIndexRoute
 }
@@ -120,6 +135,7 @@ export interface FileRoutesByTo {
   '': typeof notFoundRouteRoute
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs/create': typeof BlogsCreateRoute
   '/blogs': typeof BlogsIndexRoute
   '/projects': typeof ProjectsIndexRoute
 }
@@ -130,21 +146,37 @@ export interface FileRoutesById {
   '/__notFoundRoute': typeof notFoundRouteRoute
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
+  '/blogs/create': typeof BlogsCreateRoute
   '/blogs/': typeof BlogsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs' | '/projects'
+  fullPaths:
+    | '/'
+    | ''
+    | '/contact'
+    | '/blogs/$blogId'
+    | '/blogs/create'
+    | '/blogs'
+    | '/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/contact' | '/blogs/$blogId' | '/blogs' | '/projects'
+  to:
+    | '/'
+    | ''
+    | '/contact'
+    | '/blogs/$blogId'
+    | '/blogs/create'
+    | '/blogs'
+    | '/projects'
   id:
     | '__root__'
     | '/'
     | '/__notFoundRoute'
     | '/contact'
     | '/blogs/$blogId'
+    | '/blogs/create'
     | '/blogs/'
     | '/projects/'
   fileRoutesById: FileRoutesById
@@ -155,6 +187,7 @@ export interface RootRouteChildren {
   notFoundRouteRoute: typeof notFoundRouteRoute
   ContactRoute: typeof ContactRoute
   BlogsBlogIdRoute: typeof BlogsBlogIdRoute
+  BlogsCreateRoute: typeof BlogsCreateRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
@@ -164,6 +197,7 @@ const rootRouteChildren: RootRouteChildren = {
   notFoundRouteRoute: notFoundRouteRoute,
   ContactRoute: ContactRoute,
   BlogsBlogIdRoute: BlogsBlogIdRoute,
+  BlogsCreateRoute: BlogsCreateRoute,
   BlogsIndexRoute: BlogsIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
 }
@@ -182,6 +216,7 @@ export const routeTree = rootRoute
         "/__notFoundRoute",
         "/contact",
         "/blogs/$blogId",
+        "/blogs/create",
         "/blogs/",
         "/projects/"
       ]
@@ -197,6 +232,9 @@ export const routeTree = rootRoute
     },
     "/blogs/$blogId": {
       "filePath": "blogs/$blogId.jsx"
+    },
+    "/blogs/create": {
+      "filePath": "blogs/create.jsx"
     },
     "/blogs/": {
       "filePath": "blogs/index.jsx"

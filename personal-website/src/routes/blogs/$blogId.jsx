@@ -33,6 +33,7 @@ function RouteComponent() {
         </Link>
         <Typography sx={{ color: 'text.primary' }}>{title}</Typography>
       </Breadcrumbs>
+      <Typography variant="h4" sx={{marginTop:3}}>{title}</Typography>
       <Markdown>{content}</Markdown>
     </Container>
   </>

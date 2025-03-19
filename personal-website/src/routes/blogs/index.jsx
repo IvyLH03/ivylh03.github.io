@@ -56,7 +56,8 @@ function RouteComponent() {
         <Typography sx={{ color: 'text.primary' }}>Blogs</Typography>
         <Divider/>
       </Breadcrumbs>
-      <h1>Blogs</h1>
+      <Typography variant="h4" sx={{marginTop:3}}>Blogs</Typography>
+      <br/>
       <Typography>
         I don't know if these are serious enough to be called "blogs". Most of them are just work logs or notes that I will use for future reference. I built this blog system by myself. 
       </Typography>

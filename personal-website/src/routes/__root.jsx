@@ -77,8 +77,8 @@ function Sidebar() {
   const [statusStartTime, setStatusStartTime] = useState(Date.now())
 
   useEffect(() => {
-    // fetch("https://api.ivylh03.net/status")
-    fetch("http://127.0.0.1:5000/status")
+    fetch("https://status.ivylh03.net/status")
+    // fetch("http://127.0.0.1:5000/status")
       .then(res => res.json())
       .then(data => {
         setStatus(data.currentStatus.status)

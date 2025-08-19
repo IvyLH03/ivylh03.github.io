@@ -1,6 +1,5 @@
 import { Container, Paper, Typography, Box, Avatar} from "@mui/material";
-import avatar from '../assets/avatar.png'
-import image from '../assets/image.png'
+import image from '../assets/image.jpg'
 import { useEffect, useState } from "react";
 
 

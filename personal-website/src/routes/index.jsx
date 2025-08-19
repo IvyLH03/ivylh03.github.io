@@ -8,11 +8,11 @@ export const Route = createFileRoute('/')({
   component: RouteComponent,
 })
 
-const text = "# Hello!👋\n\nMy name is Ivy Zhu (Hanzhang Zhu). I am currently a junior in UW-Madison, majoring in Computer Science. \n\nI enjoy working on all kinds of projects and helping people build software solutions to solve real-world problems. If you're facing a challenge and need a hand, I'd love to help. And if you're working on a cool project, feel free to invite me - I'm always excited to collaborate and learn something new!"
+const text = "# Hello!👋\n\nMy name is Hanzhang Zhu, and I usually go by Ivy. I grew up in Qingdao, China, and my family moved to Los Angeles shortly after I started studying Computer Science at University of Wisconsin - Madison. \n\nI've developed and deployed multiple full-stack projects to solve problems for myself, my clients, and different organizations and companies I previously worked for. I'm very passionate about designing and building software systems, facing intellectual challenges, and learning new technologies continuously to create innovative solutions. I genuinely enjoy this process of fast prototyping and then iterating to a more reliable, sustainable system that's ready to deliver.\n\n I'm currently in my senior year studying Computer Science at UW-Madison, and I am actively looking for research, projects, and work opportunities to discover my interests and contribute to exciting ideas. \n\n"
 
-const helping = "### 👥 I can help you with...\n\n- Building websites - like this one \n\n- Building online automation tools\n\t - Post backup & text process\n\t[Example](https://ivylh03.net/bacupia/) \n\t - Automods & chatbots [Example](https://github.com/IvyLH03/Nephthys)"
-const projects = "### 💻 I am working on...\n\n- Voice interaction alarm app \n\t- Learning Kotlin\n\t- [See demo from MadHacks](https://devpost.com/software/remind-me-that)\n\n- Minesweeper AI\n\t- Learning reinforcement learning"
-const seeking = "### 🏃 I am looking for...\n\n- Any interesting opportunities! \n\t- Internship, research, projects, random ideas...\n- Meeting new friends in Madison"
+// const helping = "### 👥 I can help you with...\n\n- Building websites - like this one \n\n- Building online automation tools\n\t - Post backup & text process\n\t[Example](https://ivylh03.net/bacupia/) \n\t - Automods & chatbots [Example](https://github.com/IvyLH03/Nephthys)"
+// const projects = "### 💻 I am working on...\n\n- Voice interaction alarm app \n\t- Learning Kotlin\n\t- [See demo from MadHacks](https://devpost.com/software/remind-me-that)\n\n- Minesweeper AI\n\t- Learning reinforcement learning"
+// const seeking = "### 🏃 I am looking for...\n\n- Any interesting opportunities! \n\t- Internship, research, projects, random ideas...\n- Meeting new friends in Madison"
 
 function GridPaper({children}) {
   return <Paper sx={{
@@ -44,31 +44,9 @@ export const CustomLink = (props) => {
 }
 
 function RouteComponent() {
-  const navigate = useNavigate({})
 
   return <Container sx={{pt:8}}>
       <Markdown>{text}</Markdown>
-      <br/>
-      <Grid container>
-        <Grid size={{xs:12}}>
-          <GridPaper>
-            <Markdown>{projects}</Markdown>
-          </GridPaper> 
-        </Grid>
-        <Grid size={{xs:12, lg:6}}>
-          <GridPaper>
-            <Markdown>{helping}</Markdown>
-          </GridPaper>
-        </Grid>
-        <Grid size={{xs:12, lg:6}}>
-          <GridPaper>
-            <Markdown>{seeking}</Markdown>
-            <Stack sx={{width:"100%", flexDirection:"row", justifyContent:"flex-end"}}>
-              <Button variant='outlined' onClick={()=>{navigate({to:'contact'})}}>Contact me</Button>
-            </Stack>
-          </GridPaper>
-        </Grid>
-      </Grid>
       <br/>
   </Container>
 }

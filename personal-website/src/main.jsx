@@ -7,7 +7,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider, createRouter, createHashHistory } from '@tanstack/react-router'
 import { NotFoundRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root.jsx'
 
@@ -26,9 +26,13 @@ const notFoundRoute = new NotFoundRoute({
   </Container>),
 })
 
+// use hash routing because of GitHub Pages
+const hashHistory = createHashHistory()
+
 const router = createRouter({
   routeTree,
   notFoundRoute,
+  history: hashHistory 
 })
 
 

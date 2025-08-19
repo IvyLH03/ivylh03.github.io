@@ -6,6 +6,7 @@ import StatusCard from '../components/StatusCard';
 import { Box, IconButton, Tooltip, Typography, Drawer, Container, Button} from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -119,6 +120,10 @@ function Sidebar() {
           <IconSplit/>
           <IconButtonWithTooltip title={"email"} onClick={()=>{window.open("mailto:ivy.hanzhang.zhu@gmail.com")}}>
             <EmailIcon sx={{fontSize:40}}/>
+          </IconButtonWithTooltip>
+          <IconSplit/>
+          <IconButtonWithTooltip title={"linkedin"} onClick={()=>{window.open("https://www.linkedin.com/in/hanzhangzhu/")}}>
+            <LinkedInIcon sx={{fontSize:40}}/>
           </IconButtonWithTooltip>
         </Container>
       </Drawer> 

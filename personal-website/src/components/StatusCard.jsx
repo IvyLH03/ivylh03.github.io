@@ -1,4 +1,4 @@
-import { Container, Paper, Typography, Box, Avatar } from "@mui/material";
+import { Container, Paper, Typography, Box, Avatar, Button } from "@mui/material";
 import image from '../assets/image.jpg'
 import { useEffect, useState } from "react";
 
@@ -39,6 +39,29 @@ export default function StatusCard() {
     }, 1000);
   }, [])
 
+  const updateStatus = () => {
+    const newStatus = prompt("Enter new status:")
+    if (newStatus) {
+      fetch("https://status.ivylh03.net/status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          status: newStatus,
+          // Use password from local storage
+          upload_password: localStorage.getItem("upload_password")
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setStatus(data.currentStatus.status)
+          setStatusStartTime(data.currentStatus.starttime)
+        })
+    }
+  }
+
   return <>
     <Paper elevation={2} sx={{ p: 2, m: 2, width: "80%" }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
@@ -53,6 +76,7 @@ export default function StatusCard() {
           </Box>
           <StatusLastTimeText text={statusLastTimeFormatted} />
         </Box>
+        { localStorage.getItem("upload_password") ? <Button onClick={updateStatus} sx={{ position: "absolute", top: 0, right: 0, m: 1 }} size="small" variant="outlined">Update Status</Button>: <></> } 
       </Box>
     </Paper>
   </>

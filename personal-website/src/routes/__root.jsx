@@ -23,6 +23,7 @@ import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import * as locales from '@mui/material/locale';
 import { Link as MuiLink } from '@mui/material';
 import { useMediaQuery } from "react-responsive";
+import updateLocalUploadPassword from '../scripts/uploadPassword';
 
 
 // Icon list (github, email)
@@ -133,7 +134,7 @@ function Sidebar() {
 function FooterComponent() {
   return <footer style={{ width: "100%" }}>
     <Container sx={{ width: "100%", marginTop: 3 }}>
-      <Typography alignSelf={'center'} textAlign={'center'}>
+      <Typography alignSelf={'center'} textAlign={'center'} onClick={updateLocalUploadPassword} sx={{ cursor: "pointer" }}>
         &copy; 2025 IvyLH03
       </Typography>
     </Container>

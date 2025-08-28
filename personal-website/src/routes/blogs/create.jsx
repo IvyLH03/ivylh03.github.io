@@ -16,8 +16,11 @@ function RouteComponent() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // alert user for the upload password
-    const password = prompt("Please enter the upload password")
+    // Use password from local storage
+    const password = localStorage.getItem("upload_password")
+    if (!password) {
+      updateLocalUploadPassword()
+    }
 
     fetch("https://blog.ivylh03.net/blog/create", {
       method: "POST",

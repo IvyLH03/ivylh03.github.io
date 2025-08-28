@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import BlogEditor from '../../../components/BlogEditor'
 import { Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
+import updateLocalUploadPassword from '../../../scripts/uploadPassword'
 
 export const Route = createFileRoute('/blogs/edit/$blogId')({
   component: RouteComponent,
@@ -27,8 +28,11 @@ function RouteComponent() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // alert user for the upload password
-    const password = prompt("Please enter the upload password")
+    // Use password from local storage
+    const password = localStorage.getItem("upload_password")
+    if (!password) {
+      updateLocalUploadPassword()
+    }
 
     fetch(`https://blog.ivylh03.net/blog/${blogId}`, {
       method: "PUT",

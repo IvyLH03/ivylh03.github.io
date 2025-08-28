@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, Divider, List, ListItem, ListItemButton, ListItemText, Paper, Typography } from '@mui/material'
+import { Breadcrumbs, Button, Container, Divider, List, ListItem, ListItemButton, ListItemText, Paper, Typography } from '@mui/material'
 import { createFileRoute, createLink } from '@tanstack/react-router'
 import { Link as MuiLink} from '@mui/material';
 import Markdown from 'react-markdown'
@@ -65,6 +65,8 @@ function RouteComponent() {
       <Typography>
         Anyways, here's a list of my blogs. ✍️🔥🔥🔥
       </Typography>
+      {localStorage.getItem("upload_password") ? <Button href="#/blogs/create" variant="contained" sx={{marginTop:3}}>Create New Blog</Button>:<></>}
+      
       <BlogList blogs={blogList}/>
     </Container>
   )

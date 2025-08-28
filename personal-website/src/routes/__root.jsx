@@ -3,7 +3,7 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { forwardRef } from 'react';
 import { useState, useEffect } from 'react'
 import StatusCard from '../components/StatusCard';
-import { Box, IconButton, Tooltip, Typography, Drawer, Container, Button } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography, Drawer, Container, Button, Stack } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -73,19 +73,25 @@ const SidebarLink = (props) => {
 
 // }
 
-function Sidebar() {
-  const [status, setStatus] = useState("Loading status...")
-  const [statusStartTime, setStatusStartTime] = useState(Date.now())
+function Contacts() {
+  return (
+    <Container sx={{ display: "flex", flexDirection: "row", marginTop: 16, justifyContent: "center", alignItems: "center" }}>
+      <IconButtonWithTooltip title={"GitHub"} onClick={() => { window.open("https://github.com/IvyLH03") }}>
+        <GitHubIcon sx={{ fontSize: 40 }} />
+      </IconButtonWithTooltip>
+      <IconSplit />
+      <IconButtonWithTooltip title={"email"} onClick={() => { window.open("mailto:ivy.hanzhang.zhu@gmail.com") }}>
+        <EmailIcon sx={{ fontSize: 40 }} />
+      </IconButtonWithTooltip>
+      <IconSplit />
+      <IconButtonWithTooltip title={"linkedin"} onClick={() => { window.open("https://www.linkedin.com/in/hanzhangzhu/") }}>
+        <LinkedInIcon sx={{ fontSize: 40 }} />
+      </IconButtonWithTooltip>
+    </Container>
+  )
+}
 
-  useEffect(() => {
-    fetch("https://status.ivylh03.net/status")
-    // fetch("http://127.0.0.1:5000/status")
-      .then(res => res.json())
-      .then(data => {
-        setStatus(data.currentStatus.status)
-        setStatusStartTime(data.currentStatus.starttime)
-      })
-  }, [])
+function Sidebar() {
 
 
   return (
@@ -105,26 +111,13 @@ function Sidebar() {
       >
         <Toolbar />
         <Divider />
-        <StatusCard firstName={"Ivy"} legalFirst={"Hanzhang"} lastName={"Zhu"} nickName={"IvyLH03"} statusName={status} statusStartTime={statusStartTime} />
+        <StatusCard />
         <Divider />
         <List>
           <SidebarLink text={"Home"} to={"/"} />
           <SidebarLink text={"Blogs"} to={"/blogs"} />
-
         </List>
-        <Container sx={{ display: "flex", flexDirection: "row", marginTop: 16, justifyContent: "center", alignItems: "center" }}>
-          <IconButtonWithTooltip title={"GitHub"} onClick={() => { window.open("https://github.com/IvyLH03") }}>
-            <GitHubIcon sx={{ fontSize: 40 }} />
-          </IconButtonWithTooltip>
-          <IconSplit />
-          <IconButtonWithTooltip title={"email"} onClick={() => { window.open("mailto:ivy.hanzhang.zhu@gmail.com") }}>
-            <EmailIcon sx={{ fontSize: 40 }} />
-          </IconButtonWithTooltip>
-          <IconSplit />
-          <IconButtonWithTooltip title={"linkedin"} onClick={() => { window.open("https://www.linkedin.com/in/hanzhangzhu/") }}>
-            <LinkedInIcon sx={{ fontSize: 40 }} />
-          </IconButtonWithTooltip>
-        </Container>
+        <Contacts/>
       </Drawer>
     </Container>
 
@@ -156,22 +149,46 @@ export const Route = createRootRoute({
     return (
       <ThemeProvider theme={theme}>
         <Container sx={{ width: "100vw", height: "100vh", m: 0, p: 0 }} maxWidth={false}>
-          <Grid container sx={{ width: "100%", height: "100%", m: 0, p: 0 }}>
+          <>
             {isMobile ?
-              <></> :
-              <Grid size={"auto"} sx={{ p: 0, m: 0 }}>
-                <Sidebar />
-              </Grid>}
+              <Stack direction={"column"}>
+                <StatusCard />
+                <Divider />
+                <Stack direction={"row"} justifyContent={"center"} alignItems={"center"} sx={{ mt: 2 }}>
+                  <SidebarLink text={"Home"} to={"/"} />
+                  <SidebarLink text={"Blogs"} to={"/blogs"} />
+                </Stack>
+                <Divider />
 
-            <Grid container size={"grow"} maxWidth={"md"} direction="column">
-              <Grid size={"grow"} container>
-                <Outlet />
+                <Grid container size={"grow"} maxWidth={"md"} direction="column">
+                  <Grid size={"grow"} container>
+                    <Outlet />
+                  </Grid>
+                  <Grid size={'auto'}>
+                    <FooterComponent />
+                  </Grid>
+                </Grid>
+                <Contacts />
+              </Stack>
+              :
+              <Grid container sx={{ width: "100%", height: "100%", m: 0, p: 0 }}>
+                <Grid size={"auto"} sx={{ p: 0, m: 0 }}>
+                  <Sidebar />
+                </Grid>
+                <Grid container size={"grow"} maxWidth={"md"} direction="column">
+                  <Grid size={"grow"} container>
+                    <Outlet />
+                  </Grid>
+                  <Grid size={'auto'}>
+                    <FooterComponent />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid size={'auto'}>
-                <FooterComponent />
-              </Grid>
-            </Grid>
-          </Grid>
+
+            }
+
+
+          </>
         </Container>
       </ThemeProvider>
     )

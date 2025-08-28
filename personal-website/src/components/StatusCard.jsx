@@ -9,7 +9,21 @@ function StatusLastTimeText({ text }) {
   </>
 }
 
-export default function StatusCard({ firstName, legalFirst, lastName, statusName, statusStartTime }) {
+export default function StatusCard() {
+
+    const [status, setStatus] = useState("Loading status...")
+    const [statusStartTime, setStatusStartTime] = useState(Date.now())
+  
+    useEffect(() => {
+      fetch("https://status.ivylh03.net/status")
+      // fetch("http://127.0.0.1:5000/status")
+        .then(res => res.json())
+        .then(data => {
+          setStatus(data.currentStatus.status)
+          setStatusStartTime(data.currentStatus.starttime)
+        })
+    }, [])
+
   const [currentTime, setCurrentTime] = useState(Date.now())
   const statusLastTime = (currentTime - statusStartTime) / 1000
   const hours = Math.floor(statusLastTime / 3600)
@@ -17,6 +31,7 @@ export default function StatusCard({ firstName, legalFirst, lastName, statusName
   const seconds = Math.floor(statusLastTime % 60)
   const statusLastTimeFormatted = `• Last updated: ${String(hours).padStart(2, 0)}:${String(minutes).padStart(2, 0)}:${String(seconds).padStart(2, 0)} ago`
 
+  
 
   useEffect(() => {
     setInterval(() => {
@@ -31,10 +46,10 @@ export default function StatusCard({ firstName, legalFirst, lastName, statusName
           <Avatar sx={{ width: "100%", height: "100%" }} alt="Ivy Zhu" src={image} />
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline', p: 1, width: "60%" }}>
-          <Typography variant="h6">{firstName} {lastName}</Typography>
+          <Typography variant="h6">Ivy Zhu</Typography>
           <Box sx={{m:1}}>
             <Typography sx={{ textAlign: "left" }}>Thinking about: </Typography>
-            <Typography sx={{ textAlign: "left", fontWeight: 200}} fontStyle={"italic"}>{`"${statusName}"`}</Typography>
+            <Typography sx={{ textAlign: "left", fontWeight: 200}} fontStyle={"italic"}>{`"${status}"`}</Typography>
           </Box>
           <StatusLastTimeText text={statusLastTimeFormatted} />
         </Box>

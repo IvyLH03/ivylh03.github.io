@@ -22,6 +22,15 @@ class Note(Base):
 
     labels = relationship("Label", secondary=note_label, back_populates="notes")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "timestamp": self.timestamp.isoformat(),
+            "visibility": self.visibility,
+            "labels": [label.name for label in self.labels]
+        }
+
 class Label(Base):
     __tablename__ = "labels"
 
@@ -29,6 +38,12 @@ class Label(Base):
     name = Column(String, unique=True, nullable=False)
 
     notes = relationship("Note", secondary=note_label, back_populates="labels")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
 
 
 # Blog post model (keep migration consistent)

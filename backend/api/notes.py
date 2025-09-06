@@ -19,11 +19,12 @@ session_maker = get_session(database_url)
 @notes_bp.route('/all', methods=['POST'])
 def get_all_notes_api():
   try:
+      data = request.get_json()
       # Check argument for visibility filter
       get_private = request.args.get('include_private', False, bool)
       if get_private:
         # check upload password
-        if request.form.get("uploadPassword")!= upload_password:
+        if data.get("uploadPassword")!= upload_password:
             return "Unauthorized", 401
         notes = get_all_notes(session_maker())
         return jsonify([note.to_dict() for note in notes]), 200
@@ -48,9 +49,10 @@ def create_note_api():
       if data["uploadPassword"] != upload_password:
           return "Unauthorized", 401
 
-      new_note = create_note(content, labels, visibility)
+      new_note = create_note(session_maker(), content, labels, visibility)
       return jsonify(new_note.to_dict()), 201
   except Exception as e:
+      traceback.print_exc()
       return f"Error: {e}", 500
 
 # Update a note
@@ -66,7 +68,7 @@ def update_note_api(note_id):
       if data["uploadPassword"] != upload_password:
           return "Unauthorized", 401
 
-      updated_note = update_note(note_id, content, labels, visibility)
+      updated_note = update_note(session_maker(), note_id, content, labels, visibility)
       if not updated_note:
           return "Note not found", 404
       return jsonify(updated_note.to_dict()), 200
@@ -83,7 +85,7 @@ def delete_note_api(note_id):
       if data["uploadPassword"] != upload_password:
           return "Unauthorized", 401
 
-      success = delete_note(note_id)
+      success = delete_note(session_maker(), note_id)
       if not success:
           return "Note not found", 404
       return "Note deleted", 200
@@ -98,14 +100,14 @@ def get_notes_by_labels_api():
       label_names = data["labels"]
       
       # Check argument for visibility filter
-      get_private = data.get('include_private', False)
+      get_private = request.args.get('include_private', False)
       if get_private:
         # Verify upload password
         if data["uploadPassword"] != upload_password:
             return "Unauthorized", 401
-        notes = get_notes_by_labels(label_names, include_private=True)
+        notes = get_notes_by_labels(session_maker(), label_names, include_private=True)
       else:
-        notes = get_notes_by_labels(label_names, include_private=False)
+        notes = get_notes_by_labels(session_maker(), label_names, include_private=False)
       
       return jsonify([note.to_dict() for note in notes]), 200
   except Exception as e:

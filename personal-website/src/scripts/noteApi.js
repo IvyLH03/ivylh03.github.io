@@ -1,7 +1,7 @@
 // handle api calls to backend for notes
 
 // check if in development mode
-const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:5000" : "https://blog.ivylh03.net"
+const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:5000" : "https://status.ivylh03.net"
 
 // Get all notes.
 // Options: include_private=true to include private notes.

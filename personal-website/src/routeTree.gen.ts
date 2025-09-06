@@ -15,7 +15,9 @@ import { Route as ContactImport } from './routes/contact'
 import { Route as notFoundRouteImport } from './routes/__notFoundRoute'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProjectsIndexImport } from './routes/projects/index'
+import { Route as NotesIndexImport } from './routes/notes/index'
 import { Route as BlogsIndexImport } from './routes/blogs/index'
+import { Route as NotesCreateImport } from './routes/notes/create'
 import { Route as BlogsCreateImport } from './routes/blogs/create'
 import { Route as BlogsBlogIdImport } from './routes/blogs/$blogId'
 import { Route as BlogsEditBlogIdImport } from './routes/blogs/edit/$blogId'
@@ -45,9 +47,21 @@ const ProjectsIndexRoute = ProjectsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const NotesIndexRoute = NotesIndexImport.update({
+  id: '/notes/',
+  path: '/notes/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const BlogsIndexRoute = BlogsIndexImport.update({
   id: '/blogs/',
   path: '/blogs/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NotesCreateRoute = NotesCreateImport.update({
+  id: '/notes/create',
+  path: '/notes/create',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -108,11 +122,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsCreateImport
       parentRoute: typeof rootRoute
     }
+    '/notes/create': {
+      id: '/notes/create'
+      path: '/notes/create'
+      fullPath: '/notes/create'
+      preLoaderRoute: typeof NotesCreateImport
+      parentRoute: typeof rootRoute
+    }
     '/blogs/': {
       id: '/blogs/'
       path: '/blogs'
       fullPath: '/blogs'
       preLoaderRoute: typeof BlogsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/notes/': {
+      id: '/notes/'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesIndexImport
       parentRoute: typeof rootRoute
     }
     '/projects/': {
@@ -140,7 +168,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs/create': typeof BlogsCreateRoute
+  '/notes/create': typeof NotesCreateRoute
   '/blogs': typeof BlogsIndexRoute
+  '/notes': typeof NotesIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/blogs/edit/$blogId': typeof BlogsEditBlogIdRoute
 }
@@ -151,7 +181,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs/create': typeof BlogsCreateRoute
+  '/notes/create': typeof NotesCreateRoute
   '/blogs': typeof BlogsIndexRoute
+  '/notes': typeof NotesIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/blogs/edit/$blogId': typeof BlogsEditBlogIdRoute
 }
@@ -163,7 +195,9 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/blogs/$blogId': typeof BlogsBlogIdRoute
   '/blogs/create': typeof BlogsCreateRoute
+  '/notes/create': typeof NotesCreateRoute
   '/blogs/': typeof BlogsIndexRoute
+  '/notes/': typeof NotesIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/blogs/edit/$blogId': typeof BlogsEditBlogIdRoute
 }
@@ -176,7 +210,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/blogs/$blogId'
     | '/blogs/create'
+    | '/notes/create'
     | '/blogs'
+    | '/notes'
     | '/projects'
     | '/blogs/edit/$blogId'
   fileRoutesByTo: FileRoutesByTo
@@ -186,7 +222,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/blogs/$blogId'
     | '/blogs/create'
+    | '/notes/create'
     | '/blogs'
+    | '/notes'
     | '/projects'
     | '/blogs/edit/$blogId'
   id:
@@ -196,7 +234,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/blogs/$blogId'
     | '/blogs/create'
+    | '/notes/create'
     | '/blogs/'
+    | '/notes/'
     | '/projects/'
     | '/blogs/edit/$blogId'
   fileRoutesById: FileRoutesById
@@ -208,7 +248,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   BlogsBlogIdRoute: typeof BlogsBlogIdRoute
   BlogsCreateRoute: typeof BlogsCreateRoute
+  NotesCreateRoute: typeof NotesCreateRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
+  NotesIndexRoute: typeof NotesIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   BlogsEditBlogIdRoute: typeof BlogsEditBlogIdRoute
 }
@@ -219,7 +261,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   BlogsBlogIdRoute: BlogsBlogIdRoute,
   BlogsCreateRoute: BlogsCreateRoute,
+  NotesCreateRoute: NotesCreateRoute,
   BlogsIndexRoute: BlogsIndexRoute,
+  NotesIndexRoute: NotesIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   BlogsEditBlogIdRoute: BlogsEditBlogIdRoute,
 }
@@ -239,7 +283,9 @@ export const routeTree = rootRoute
         "/contact",
         "/blogs/$blogId",
         "/blogs/create",
+        "/notes/create",
         "/blogs/",
+        "/notes/",
         "/projects/",
         "/blogs/edit/$blogId"
       ]
@@ -259,8 +305,14 @@ export const routeTree = rootRoute
     "/blogs/create": {
       "filePath": "blogs/create.jsx"
     },
+    "/notes/create": {
+      "filePath": "notes/create.jsx"
+    },
     "/blogs/": {
       "filePath": "blogs/index.jsx"
+    },
+    "/notes/": {
+      "filePath": "notes/index.jsx"
     },
     "/projects/": {
       "filePath": "projects/index.jsx"

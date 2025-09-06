@@ -116,6 +116,7 @@ function Sidebar() {
         <List>
           <SidebarLink text={"Home"} to={"/"} />
           <SidebarLink text={"Blogs"} to={"/blogs"} />
+          <SidebarLink text={"Notes"} to={"/notes"} />
         </List>
         <Contacts/>
       </Drawer>

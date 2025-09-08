@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request, current_app
 import time
+import os
+from dotenv import load_dotenv
 
 
 # status for card
@@ -7,6 +9,9 @@ status = "Hello"
 statustime = time.time() * 1000
 
 status_bp = Blueprint("status", __name__)
+
+load_dotenv()
+upload_password = os.getenv("UPLOAD_PASSWORD")
 
 # get status
 @status_bp.route('/', methods=['GET'])
@@ -28,8 +33,7 @@ def post_status():
         data = request.get_json()
         status = data["status"]
         statustime = time.time() * 1000
-        upload_password = data["uploadPassword"]
-        if upload_password != current_app.config.get("UPLOAD_PASSWORD"):
+        if upload_password != data["uploadPassword"]:
             return "Unauthorized", 401
     except Exception as e:
         return f"Error: {e}", 500

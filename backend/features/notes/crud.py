@@ -1,19 +1,20 @@
 from sqlalchemy.orm import Session
 from features.notes.models import Note, Label
+import datetime
 
 # Database Operations.
 
 # Get all notes.
 def get_all_notes(db: Session):
-    return db.query(Note).all()
+    return db.query(Note).order_by(Note.timestamp.desc()).all()
 
 # Get all visible notes.
 def get_all_visible_notes(db: Session):
-    return db.query(Note).filter(Note.visibility == True).all()
+    return db.query(Note).filter(Note.visibility == True).order_by(Note.timestamp.desc()).all()
 
 # Post a note.
 def create_note(db: Session, content: str, labels: list[str], visibility: bool = True):
-    new_note = Note(content=content, visibility=visibility)
+    new_note = Note(content=content, visibility=visibility, timestamp=datetime.datetime.now(tz=datetime.timezone.utc))
     
     for label_name in labels:
         label = db.query(Label).filter(Label.name == label_name).first()

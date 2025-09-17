@@ -32,6 +32,9 @@ function GridPaper({ children }) {
 }
 
 import * as React from 'react'
+import BlogPreviewCard from '../components/BlogPreviewCard';
+import NoteCard from '../components/NoteCard';
+import { getAllNotes } from '../scripts/noteApi';
 
 
 const BasicLinkComponent = React.forwardRef(
@@ -48,16 +51,50 @@ export const CustomLink = (props) => {
   return <CreatedLinkComponent preload={'intent'} {...props} />
 }
 
+const getRecentBlogAndNote = async () => {
+  const notes = await getAllNotes().then(res => res.slice(0, 2))
+  const blogMetadata = await fetch("https://blog.ivylh03.net/blogs").then(res => res.json()).then(res => res[0])
+  const blogContent = await fetch(`https://blog.ivylh03.net/blog/${blogMetadata.id}`).then(res => res.json()).then(res => res.content)
+  return { notes, blog: { ...blogMetadata, content: blogContent } }
+}
+
 function RouteComponent() {
+  const [data, setData] = React.useState({ notes: null, blog: null })
+  React.useEffect(() => {
+    getRecentBlogAndNote().then(setData)
+  }, [])
 
   return <Container sx={{ pt: 8 }}>
     <Markdown>{text}</Markdown>
     <br />
     <Grid container spacing={2}>
-      <Grid xs={12} sm={6}>
-        <GridPaper>
-          Check out my <Link to={"/blogs"}>blogs</Link> for more of my thoughts and ideas!
-        </GridPaper>
+      <Grid container spacing={2}>
+        <Grid size={{ xs: 12, sm: 12, md: 6 , lg: 6}}>
+          <Typography variant="h4" sx={{ mt: 4, mb: 2 }}>Recent Blogs</Typography>
+          <BlogPreviewCard
+            title={data.blog ? data.blog.title : "Loading..."}
+            timestamp={data.blog ? data.blog.created_at : ""}
+            content={data.blog ? data.blog.content : "Loading..."}
+            onClick={() => window.location.href = `/#/blogs/${data.blog ? data.blog.id : ""}`}
+          />
+          <Button variant="contained" onClick={() => window.location.href = '/#/blogs'}>See all blogs</Button>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 12, md: 6 , lg: 6}}>
+          <Typography variant="h4" sx={{ mt: 4, mb: 2 }}>Recent Thoughts</Typography>
+          <Stack direction={"column"} spacing={2} sx={{ mb: 2 }}>
+            {data.notes ? data.notes.map(note => (
+              <NoteCard
+                key={note.id}
+                content={note.content}
+                id={note.id}
+                timestamp={note.timestamp}
+                labels={note.labels}
+              />
+            )) : "Loading..."}
+          </Stack>
+          <Button variant="contained" onClick={() => window.location.href = '/#/notes'}>See all notes</Button>
+        </Grid>
+
       </Grid>
       <Grid xs={12}/>
         <GridPaper>

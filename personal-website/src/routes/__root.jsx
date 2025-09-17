@@ -158,6 +158,7 @@ export const Route = createRootRoute({
                 <Stack direction={"row"} justifyContent={"center"} alignItems={"center"} sx={{ mt: 2 }}>
                   <SidebarLink text={"Home"} to={"/"} />
                   <SidebarLink text={"Blogs"} to={"/blogs"} />
+                  <SidebarLink text={"Notes"} to={"/notes"} />
                 </Stack>
                 <Divider />
 

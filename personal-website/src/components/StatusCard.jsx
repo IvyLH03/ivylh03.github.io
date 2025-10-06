@@ -42,7 +42,7 @@ export default function StatusCard() {
   const updateStatus = () => {
     const newStatus = prompt("Enter new status:")
     if (newStatus) {
-      fetch("https://status.ivylh03.net/status", {
+      fetch("https://status.ivylh03.net/status/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
